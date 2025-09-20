@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,22 +12,17 @@
             font-family: Georgia, serif;
         }
 
-        /* 3. CSS untuk efek hover pada card */
         .clickable-card {
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
         .clickable-card:hover {
             transform: scale(1.03);
-            /* Sedikit membesar saat di-hover */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            /* Tambah bayangan */
         }
 
-        /* Membuat link di dalam card terlihat seperti teks biasa */
         .card-title-link {
             color: inherit;
-            /* Mewarisi warna dari parent */
             text-decoration: none;
         }
     </style>
@@ -34,12 +30,18 @@
 
 <body>
     <header>
-        <nav class="navbar align-items-center py-2 px-2" style="background-color: lightpink;">
+        <nav class="navbar navbar-expand-lg py-2 px-2" style="background-color: lightpink;">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
                     <span class="material-symbols-outlined mx-2 me-2">database</span>
                     Database Perkuliahan
                 </a>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" href="#">Home</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -85,6 +87,6 @@
 
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
