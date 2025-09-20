@@ -2,64 +2,62 @@
 require_once 'config.php';
 session_start();
 
-$NIP      = "";
+$NIM      = "";
 $Nama     = "";
 $Alamat   = "";
-$NIP_lama = "";
+$NIM_lama = "";
 $error    = "";
 $mode_edit = false;
 
-
-
-if (isset($_GET['NIP'])) {
+if (isset($_GET['NIM'])) {
     $mode_edit = true;
-    $NIP_lama = $_GET['NIP'];
+    $NIM_lama = $_GET['NIM'];
 
-    $sql_get = "SELECT * FROM Dosen WHERE NIP = '$NIP_lama'";
+    $sql_get = "SELECT * FROM Mahasiswa WHERE NIM = '$NIM_lama'";
     $query_get = mysqli_query($conn, $sql_get);
     $result = mysqli_fetch_array($query_get);
 
     if ($result) {
-        $NIP    = $result['NIP'];
+        $NIM    = $result['NIM'];
         $Nama   = $result['Nama'];
         $Alamat = $result['Alamat'];
     } else {
         $error = "Data tidak ditemukan.";
-        $NIP_lama = "";
+        $NIM_lama = "";
     }
 }
 
 if (isset($_POST['Simpan'])) {
-    $NIP      = $_POST['NIP'];
+    $NIM      = $_POST['NIM'];
     $Nama     = $_POST['Nama'];
     $Alamat   = $_POST['Alamat'];
-    $NIP_lama = $_POST['NIP_lama'];
+    $NIM_lama = $_POST['NIM_lama'];
 
-    if ($NIP == '' || $Nama == '' || $Alamat == '') {
+    if ($NIM == '' || $Nama == '' || $Alamat == '') {
         $error = "Semua field wajib diisi.";
     }
 
-    if(empty($NIP_lama) || (!empty($NIP_lama) && ($NIP !== $NIP_lama))) {
-        $check_sql = "SELECT NIP FROM Dosen WHERE NIP = '$NIP'";
+    if(empty($NIM_lama) || (!empty($NIM_lama) && ($NIM !== $NIM_lama))) {
+        $check_sql = "SELECT NIM FROM Mahasiswa WHERE NIM = '$NIM'";
         $query_check = mysqli_query($conn, $check_sql);
 
         if(mysqli_num_rows($query_check) > 0) {
-            $error = "NIP '$NIP' sudah terdaftar. Silakan gunakan NIP yang lain.";
+            $error = "NIM '$NIM' sudah terdaftar. Silakan gunakan NIM yang lain.";
         }
     }
 
     if (empty($error)) {
-        if ($NIP_lama) {
-            $sql_query = "UPDATE Dosen SET NIP='$NIP', Nama='$Nama', Alamat='$Alamat' WHERE NIP = '$NIP_lama'";
+        if ($NIM_lama) {
+            $sql_query = "UPDATE Mahasiswa SET NIM='$NIM', Nama='$Nama', Alamat='$Alamat' WHERE NIM = '$NIM_lama'";
         } else {
-            $sql_query = "INSERT INTO Dosen(NIP, Nama, Alamat) VALUES ('$NIP', '$Nama', '$Alamat')";
+            $sql_query = "INSERT INTO Mahasiswa(NIM, Nama, Alamat) VALUES ('$NIM', '$Nama', '$Alamat')";
         }
         
         $execution = mysqli_query($conn, $sql_query);
         
         if ($execution) {
             $_SESSION['sukses'] = "Berhasil menyimpan data.";
-            header("Location: dosen.php");
+            header("Location: mahasiswa.php");
             exit();
         } else {
             $error = "Gagal menyimpan data ke database.";
@@ -72,7 +70,7 @@ if (isset($_POST['Simpan'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo ($mode_edit) ? "Edit" : "Input"; ?> Data Dosen</title>
+    <title><?php echo ($mode_edit) ? "Edit" : "Input"; ?> Data Mahasiswa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=database" />
     <style>        
@@ -114,7 +112,7 @@ if (isset($_POST['Simpan'])) {
     <main class="container my-5">
         <div class="form-container">
             <h1 class="text-center p-3 mb-4">
-                <?php echo ($mode_edit) ? "Edit Data Dosen" : "Input Data Dosen"; ?>
+                <?php echo ($mode_edit) ? "Edit Data Mahasiswa" : "Input Data Mahasiswa"; ?>
             </h1>
             
             <?php if ($error) : ?>
@@ -122,11 +120,11 @@ if (isset($_POST['Simpan'])) {
             <?php endif; ?>
 
             <form action="" method="post">
-                <input type="hidden" name="NIP_lama" value="<?php echo $NIP_lama; ?>">
+                <input type="hidden" name="NIM_lama" value="<?php echo $NIM_lama; ?>">
 
                 <div class="mb-3">
-                    <label for="NIP" class="form-label">NIP</label>
-                    <input type="number" class="form-control" id="NIP" name="NIP" value="<?php echo $NIP; ?>" required>
+                    <label for="NIM" class="form-label">NIM</label>
+                    <input type="text" class="form-control" id="NIM" name="NIM" value="<?php echo $NIM; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="Nama" class="form-label">Nama</label>
@@ -138,7 +136,7 @@ if (isset($_POST['Simpan'])) {
                 </div>
                 <div class="mt-4 d-flex gap-2">
                     <input type="submit" class="btn btn-custom fw-medium" name="Simpan" value="Simpan Data" style="background-color: lightpink;">
-                    <a href="dosen.php" class="btn btn-secondary">Kembali</a>
+                    <a href="mahasiswa.php" class="btn btn-secondary">Kembali</a>
                 </div>
             </form>
         </div>

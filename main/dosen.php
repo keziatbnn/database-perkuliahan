@@ -85,7 +85,7 @@ if ($op == 'delete') {
             </thead>
             <tbody>
                 <?php
-                $sql1 = "select * from dosen";
+                $sql1 = "select * from Dosen";
                 $q1 = mysqli_query($conn, $sql1);
                 $nomor = 1;
                 while ($r1 = mysqli_fetch_array($q1)) {
